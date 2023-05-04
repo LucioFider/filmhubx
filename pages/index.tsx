@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { getSession, signOut } from "next-auth/react";
 import { NextPageContext } from "next";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,11 +35,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h2 className="text-red-500">Filmhub</h2>
-        <p className="text-white"> Logged in as :{user?.name}</p>
-        <button className="h-10 w-full bg-white" onClick={() => signOut()}>
-          Logout
-        </button>
+        <Navbar />
       </main>
     </>
   );
