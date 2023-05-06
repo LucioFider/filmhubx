@@ -5,6 +5,8 @@ import { NextPageContext } from "next";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import Navbar from "@/components/Navbar";
 import Billboard from "@/components/Billboard";
+import MovieList from "@/components/MovieList";
+import useMovieList from "@/hooks/useMovieList";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +28,7 @@ export async function getServerSideProps(context: NextPageContext) {
 }
 
 export default function Home() {
-  const { data: user } = useCurrentUser();
+  const { data: movies = [] } = useMovieList();
   return (
     <>
       <Head>
@@ -38,6 +40,9 @@ export default function Home() {
       <main>
         <Navbar />
         <Billboard />
+        <div className="pb-40">
+          <MovieList title="Trending now" data={movies} />
+        </div>
       </main>
     </>
   );
