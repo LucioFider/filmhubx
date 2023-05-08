@@ -8,7 +8,7 @@ import MovieList from "@/components/MovieList";
 import useMovieList from "@/hooks/useMovieList";
 import useFavorites from "@/hooks/useFavorites";
 import InfoModal from "@/components/InfoModal";
-import useInfoModal from "@/hooks/useinfoModal";
+import useInfoModal from "@/hooks/useInfoModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
