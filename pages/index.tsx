@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Billboard from "@/components/Billboard";
 import MovieList from "@/components/MovieList";
 import useMovieList from "@/hooks/useMovieList";
+import useFavorites from "@/hooks/useFavorites";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
 export default function Home() {
   const { data: movies = [] } = useMovieList();
+  const { data: favorites = [] } = useFavorites();
   return (
     <>
       <Head>
@@ -37,13 +39,13 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <Navbar />
-        <Billboard />
-        <div className="pb-40">
-          <MovieList title="Trending now" data={movies} />
-        </div>
-      </main>
+
+      <Navbar />
+      <Billboard />
+      <div className="pb-40">
+        <MovieList title="Trending now" data={movies} />
+        <MovieList title="My List" data={favorites} />
+      </div>
     </>
   );
 }

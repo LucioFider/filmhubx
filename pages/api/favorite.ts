@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { without } from "lodash";
+
 import prismadb from "@/lib/prismadb";
 import serverAuth from "@/lib/serverAuth";
 
@@ -12,6 +13,7 @@ export default async function handler(
       const { currentUser } = await serverAuth(req);
 
       const { movieId } = req.body;
+
       const existingMovie = await prismadb.movie.findUnique({
         where: {
           id: movieId,
@@ -32,6 +34,7 @@ export default async function handler(
           },
         },
       });
+
       return res.status(200).json(user);
     }
 
@@ -45,9 +48,11 @@ export default async function handler(
           id: movieId,
         },
       });
+
       if (!existingMovie) {
         throw new Error("Invalid ID");
       }
+
       const updatedFavoriteIds = without(currentUser.favoriteIds, movieId);
 
       const updatedUser = await prismadb.user.update({
@@ -58,11 +63,14 @@ export default async function handler(
           favoriteIds: updatedFavoriteIds,
         },
       });
+
       return res.status(200).json(updatedUser);
     }
+
     return res.status(405).end();
   } catch (error) {
     console.log(error);
-    return res.status(400).end();
+
+    return res.status(500).end();
   }
 }
